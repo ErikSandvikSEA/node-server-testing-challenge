@@ -75,6 +75,28 @@ describe('employeesRouter.js', () => {
                let updatedEmployeeList = await supertest(server)
                     .get('/')
                     expect(updatedEmployeeList.body).toHaveLength(4)
+                    expect(updatedEmployeeList.body).toEqual([
+                         {
+                              id: 1,
+                              username: 'Saul Greenburg',
+                              jobTitle_name: 'CEO'
+                         },
+                         {
+                              id: 2,
+                              username: 'Thad Scheister',
+                              jobTitle_name: 'CFO'
+                         },
+                         {
+                              id: 3,
+                              username: 'Chuck Johnson',
+                              jobTitle_name: 'Controller'
+                         },
+                         {
+                              id: 4,
+                              username: 'Hosea Kiefer',
+                              jobTitle_name: "Commercial Intern"
+                         }
+                    ])
           })
      })
 
