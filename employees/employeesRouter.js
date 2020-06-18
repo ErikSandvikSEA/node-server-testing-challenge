@@ -35,4 +35,46 @@ server.post('/',
                })
 })
 
+//DELETE employee by id
+server.delete('/:id', validateEmployeeId, (req, res) => {
+     const employeeId = req.params.id
+     Employees.remove(employeeId)
+          .then(removedEmployee => {
+               res.status(200).json({
+                    message: 'Successfully Deleted',
+                    removedEmployee: removedEmployee
+               })
+          })
+          .catch(err => {
+               res.status(500).json({
+                    message: 'Error occured while deleting',
+                    error: err
+               })
+          })
+})
+
+
+
+function validateEmployeeId(req, res, next) {
+     const urlId = req.params.id
+     Employees.findById(urlId)
+          .then(employee => {
+               if(employee){
+                    req.employee = employee
+                    next()
+               } else {
+                    res.status(404).json({
+                         message: 'Employee ID not found, sry'
+                    })
+               }
+          })
+          .catch(err => {
+               console.log(err)
+               res.status(500).json({
+                    error: err,
+                    message: 'Error retrieving the Employee'
+               })
+          })
+}
+
 module.exports = server
